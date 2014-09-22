@@ -1,0 +1,604 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ec="http://schemas.microsoft.com/expression/2010/controls"
+	mc:Ignorable="d"
+	x:Class="F1TVOverlay.Widget.RevMeter"
+    xmlns:l="clr-namespace:TMTVO"
+	x:Name="UserControl"
+	d:DesignWidth="640" d:DesignHeight="480" Width="315" Height="301">
+    <UserControl.Resources>
+        <Storyboard x:Key="FadeIn" Timeline.DesiredFrameRate="30">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LayoutRoot">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FadeOut" Timeline.DesiredFrameRate="30">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LayoutRoot">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="GearPlus" Timeline.DesiredFrameRate="30">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="88.5,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="56.5,9,120.5,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_1">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="120.5,9,56.5,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="88.5,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_3">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="56.5,9,120.5,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="26,14,151,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_2">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="26,14,151,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="0,14,177,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_4">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="151,14,26,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="120.5,9,56.5,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_4_Dummy">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="177,14,0,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="151,14,26,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_2_Dummy">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="0,14,177,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_2">
+        		<EasingColorKeyFrame KeyTime="0" Value="#7F8F8F8F"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#008F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_4">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="24"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="32"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_4">
+        		<EasingColorKeyFrame KeyTime="0" Value="#7F8F8F8F"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FFB8B8B8"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_1">
+        		<EasingColorKeyFrame KeyTime="0" Value="#FFB8B8B8"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_1">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="32"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="45.333"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="45.333"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="32"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear">
+        		<EasingColorKeyFrame KeyTime="0" Value="White"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FFB8B8B8"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_3">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="32"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="24"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_3">
+        		<EasingColorKeyFrame KeyTime="0" Value="#FFB8B8B8"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#7F8F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_4_Dummy">
+        		<EasingColorKeyFrame KeyTime="0" Value="#008F8F8F"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#7F8F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="ResetGears" Timeline.DesiredFrameRate="30">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="88.5,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_1">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="120.5,9,56.5,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_3">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="56.5,9,120.5,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_2">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="26,14,151,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_4">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="151,14,26,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_4_Dummy">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="177,14,0,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_2_Dummy">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="0,14,177,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_4_Dummy">
+        		<EasingColorKeyFrame KeyTime="0" Value="#008F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_2_Dummy">
+        		<EasingColorKeyFrame KeyTime="0" Value="#008F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="45.333"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear">
+        		<EasingColorKeyFrame KeyTime="0" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_1">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="32"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_1">
+        		<EasingColorKeyFrame KeyTime="0" Value="#FFB8B8B8"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_3">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="32"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_3">
+        		<EasingColorKeyFrame KeyTime="0" Value="#FFB8B8B8"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_2">
+        		<EasingColorKeyFrame KeyTime="0" Value="#7F8F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_2">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="24"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_4">
+        		<EasingColorKeyFrame KeyTime="0" Value="#7F8F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_4">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="24"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_4_Dummy">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="24"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_2_Dummy">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="24"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="GearMinus" Timeline.DesiredFrameRate="30">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="88.5,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="120.5,9,56.5,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_1">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="120.5,9,56.5,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="151,14,26,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_3">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="56.5,9,120.5,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="88.5,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_2">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="26,14,151,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="56.5,9,120.5,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_4">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="151,14,26,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="171,14,0,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_4_Dummy">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="177,14,0,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Gear_2_Dummy">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="0,14,177,0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="26,14,151,0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_2_Dummy">
+        		<EasingColorKeyFrame KeyTime="0" Value="#008F8F8F"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#7F8F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_2">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="24"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="32"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_2">
+        		<EasingColorKeyFrame KeyTime="0" Value="#7F8F8F8F"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FFB8B8B8"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_3">
+        		<EasingColorKeyFrame KeyTime="0" Value="#FFB8B8B8"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_3">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="32"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="45.333"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear">
+        		<EasingColorKeyFrame KeyTime="0" Value="White"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FFB8B8B8"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="45.333"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="32"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_1">
+        		<EasingColorKeyFrame KeyTime="0" Value="#FFB8B8B8"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#7F8F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.FontSize)" Storyboard.TargetName="Gear_1">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="32"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="24"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Gear_4">
+        		<EasingColorKeyFrame KeyTime="0" Value="#7F8F8F8F"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#008F8F8F"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="P2pActivated" Timeline.DesiredFrameRate="30">
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="P2PPath">
+        		<EasingColorKeyFrame KeyTime="0" Value="#FF0CFF00"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FF09B800"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="P2pDisabled" Timeline.DesiredFrameRate="30">
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="P2PPath">
+        		<EasingColorKeyFrame KeyTime="0" Value="#FF09B800"/>
+        		<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#991B1B1B"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Foreground>
+		<SolidColorBrush Color="Black" Opacity="0"/>
+	</UserControl.Foreground>
+
+	<Grid x:Name="LayoutRoot" Opacity="0">
+		<Path x:Name="MainBody" Data="M157.5,0 C167.16498,0 175,7.8350172 175,17.5 175,18.708123 174.87758,19.887653 174.64445,21.026857 L174.25992,22.522398 175.01246,22.608732 C204.61801,26.385761 231.28508,39.611343 251.91813,59.178719 L252.79716,60.030899 252.98872,59.715588 C256.1336,55.060555 261.45938,52 267.5,52.000002 277.16498,52 285,59.835018 285,69.5 285,76.748737 280.5928,82.968117 274.31178,85.624763 L273.77475,85.82132 274.87782,87.586678 C287.64282,108.52888 295,133.15214 295,159.5 295,161.88173 294.93988,164.24936 294.82107,166.60146 L294.65375,169.25166 295.71072,169.09035 C296.29901,169.03061 296.89593,169 297.5,169 307.16498,169 315,176.83502 315,186.5 315,196.16498 307.16498,204 297.5,204 294.4797,204 291.63809,203.23486 289.15845,201.88785 L288.50894,201.49326 287.77548,203.76062 C279.16089,229.31007 263.29402,251.50394 242.634,267.87419 L239.20328,270.48753 240.00384,271.36838 C242.50032,274.3934 244,278.27158 244,282.5 244,292.16498 236.16498,300 226.5,300 218.6472,300 212.00247,294.82767 209.78677,287.70395 L209.6615,287.21677 208.35647,287.75336 C192.62549,294.04214 175.4651,297.5 157.5,297.5 137.32866,297.5 118.17181,293.14069 100.91372,285.30954 L99.69589,284.73886 99.644461,285.02686 C98.012648,293.00131 90.956861,299 82.500006,299 72.835016,299 64.999998,291.16498 65.000002,281.5 64.999998,276.06345 67.479048,271.2059 71.368368,267.99615 L71.967737,267.54796 70.037233,265.9875 C49.982889,249.37701 34.700633,227.1705 26.563788,201.74991 L26.486414,201.49608 25.841538,201.88785 C23.361905,203.23486 20.520305,204 17.499999,204 7.8350153,204 -1.9073486E-06,196.16498 0,186.5 -1.9073486E-06,176.83502 7.8350153,169 17.499999,169 18.10406,169 18.700973,169.03061 19.289272,169.09035 L20.351945,169.25253 20.226205,167.48277 C20.076084,164.84105 19.999997,162.17944 19.999994,159.5 19.999997,133.30099 27.274277,108.80716 39.906332,87.941978 L40.212954,87.449005 39.296036,87.213242 C32.172334,84.997532 26.999998,78.352798 26.999998,70.499996 26.999998,60.835018 34.835015,53 44.500002,53.000002 51.144672,53 56.924406,56.70327 59.887842,62.158463 L59.938269,62.263134 60.272814,61.919266 C81.267515,40.848221 109.01999,26.559521 139.98753,22.608732 L140.74007,22.522398 140.35554,21.026857 C140.12242,19.887653 140,18.708123 140,17.5 140,7.8350172 147.83501,0 157.5,0 z" Fill="#B2131313" HorizontalAlignment="Center" Height="300" Margin="0,0,0,1" Stretch="Fill" VerticalAlignment="Center" Width="315"/>
+		<Path x:Name="FixedText" Fill="#FFA4A4A4" HorizontalAlignment="Left" VerticalAlignment="Top" Data="M220.104,276.20798 C219.20801,276.20798 218.47202,276.79999 218.47202,278.07999 218.47202,279.35999 219.11201,279.95198 220.104,279.95199 220.856,279.95198 221.73601,279.43999 221.73601,278.07999 221.73601,276.79999 221.00002,276.20798 220.104,276.20798 z M146.02679,272.556 C146.8788,272.556 147.31081,272.904 147.74281,273.348 148.24682,272.796 148.83483,272.556 149.66284,272.556 150.61085,272.556 151.69086,273.288 151.69087,274.668 L151.69087,278.712 150.46685,278.712 150.46685,275.088 C150.46685,274.26 149.95084,273.78 149.26683,273.78 148.57082,273.78 148.05482,274.26 148.05482,275.088 L148.05482,278.712 146.8308,278.712 146.8308,275.088 C146.8308,274.26 146.31479,273.78 145.63078,273.78 144.93478,273.78 144.41877,274.26 144.41877,275.088 L144.41877,278.712 143.19475,278.712 143.19475,272.628 144.41877,272.628 144.41877,273.276 144.44277,273.276 C144.82677,272.796 145.37878,272.556 146.02679,272.556 z M227.78401,271.63199 C226.82401,271.63198 226.18401,272.27199 226.18401,273.37598 L226.18401,278.20798 C226.18401,279.31199 226.82401,279.95198 227.78401,279.95199 228.744,279.95198 229.384,279.31199 229.384,278.20798 L229.384,273.37598 C229.384,272.27199 228.744,271.63198 227.78401,271.63199 z M157.34294,270.168 L158.56696,270.168 158.56696,273.276 158.59096,273.276 C158.97496,272.796 159.52697,272.556 160.17498,272.556 161.12299,272.556 162.203,273.288 162.203,274.668 L162.203,278.712 160.97899,278.712 160.97899,275.088 C160.97899,274.26 160.46298,273.78 159.77897,273.78 159.08296,273.78 158.56696,274.26 158.56696,275.088 L158.56696,278.712 157.34294,278.712 z M136.896,270.168 L138.12002,270.168 138.12002,275.484 138.14402,275.484 140.48405,272.628 141.94807,272.628 139.84804,275.004 142.23608,278.712 140.70006,278.712 139.08003,275.868 138.12002,276.96 138.12002,278.712 136.896,278.712 z M155.51825,270.096 L156.45426,270.096 153.58622,278.784 152.65021,278.784 z M220.328,270.09599 L222.15201,270.09599 219.75201,274.91198 219.78401,274.91198 C220.024,274.81599 220.37601,274.76798 220.64801,274.76798 222.08801,274.76798 223.36801,275.72798 223.36801,277.93599 223.36801,280.54398 221.70401,281.58398 220.00801,281.58398 218.42401,281.58398 216.84001,280.25598 216.84001,278.11198 216.84001,277.43999 216.98401,276.78399 217.272,276.20798 z M227.78401,269.99998 C229.464,269.99998 231.01601,271.18398 231.01601,273.27998 L231.01601,278.30399 C231.01601,280.39999 229.464,281.58398 227.78401,281.58398 226.104,281.58398 224.552,280.39999 224.552,278.30399 L224.552,273.27998 C224.552,271.18398 226.104,269.99998 227.78401,269.99998 z M211.992,269.99998 C214.024,269.99998 215.35201,271.58398 215.35201,273.24799 215.35201,274.11198 215.08,274.99198 214.136,275.59998 215.09601,276.20798 215.48001,277.16798 215.48001,278.09599 215.48001,280.20798 213.96001,281.58398 212.024,281.58398 210.48801,281.58398 209.09601,280.55998 208.79201,278.65599 L210.42401,278.65599 C210.72801,279.43999 211.19202,279.95198 212.12001,279.95199 213.03201,279.95198 213.84801,279.26398 213.84801,278.14398 213.84801,277.00799 213.048,276.33598 212.08801,276.33598 L211.40001,276.33598 211.40001,274.89598 211.96001,274.89598 C213.048,274.89598 213.72002,274.20798 213.72002,273.27998 213.72002,272.35198 212.968,271.63198 212.05602,271.63199 211.36801,271.63198 210.66402,272.07999 210.48801,273.00799 L208.856,273.00799 C208.98401,271.39198 210.37601,269.99998 211.992,269.99998 z M75.104012,269.63198 C74.144009,269.63198 73.504009,270.27199 73.504009,271.37599 L73.504009,276.20798 C73.504009,277.31198 74.144009,277.95198 75.104012,277.95198 76.064007,277.95198 76.704006,277.31198 76.70401,276.20798 L76.70401,271.37599 C76.704006,270.27199 76.064007,269.63198 75.104012,269.63198 z M75.104012,267.99998 C76.784008,267.99998 78.336006,269.18398 78.336014,271.27998 L78.336014,276.30399 C78.336006,278.39999 76.784008,279.58398 75.104012,279.58398 73.424007,279.58398 71.872009,278.39999 71.872009,276.30399 L71.872009,271.27998 C71.872009,269.18398 73.424007,267.99998 75.104012,267.99998 z M145.61546,204.912 C144.09544,204.912 144.01544,206.256 144.01544,207.44 144.01544,208.608 144.09544,209.952 145.61546,209.952 147.15148,209.952 147.23148,208.688 147.23148,207.44 147.23148,206.176 147.15148,204.912 145.61546,204.912 z M154.5589,203.28 C155.69492,203.28 156.27093,203.744 156.84694,204.336 157.51894,203.6 158.30295,203.28 159.40697,203.28 160.67098,203.28 162.111,204.256 162.111,206.096 L162.111,211.488 160.47898,211.488 160.47898,206.656 C160.47898,205.552 159.79097,204.912 158.87896,204.912 157.95095,204.912 157.26294,205.552 157.26294,206.656 L157.26294,211.488 155.63092,211.488 155.63092,206.656 C155.63092,205.552 154.94291,204.912 154.0309,204.912 153.10289,204.912 152.41488,205.552 152.41488,206.656 L152.41488,211.488 150.78286,211.488 150.78286,203.376 152.41488,203.376 152.41488,204.24 152.44688,204.24 C152.95889,203.6 153.69489,203.28 154.5589,203.28 z M146.11147,203.28 C147.10348,203.28 147.82349,203.728 148.28749,204.336 148.7355,204.912 148.8635,205.44 148.8635,207.44 148.8635,209.424 148.7355,209.952 148.28749,210.528 147.82349,211.136 147.10348,211.584 146.11147,211.584 145.27945,211.584 144.62345,211.2 144.01544,210.624 L144.01544,214.768 142.38342,214.768 142.38342,203.376 144.01544,203.376 144.01544,204.224 C144.52744,203.664 145.27945,203.28 146.11147,203.28 z M139.93605,203.28 C140.59206,203.28 141.13607,203.52 141.63208,203.904 L140.44806,205.312 C140.06405,205.024 139.79205,204.912 139.37604,204.912 138.57603,204.912 137.79202,205.424 137.79203,206.608 L137.79203,211.488 136.16,211.488 136.16,203.376 137.79203,203.376 137.79203,204.24 137.82402,204.24 C138.33603,203.6 139.07204,203.28 139.93605,203.28 z M3.2640076,178.20799 C2.3680115,178.20799 1.6320038,178.79999 1.6320038,180.07999 1.6320038,181.35999 2.2720032,181.95199 3.2640076,181.95199 4.0160065,181.95199 4.8960114,181.43999 4.8960114,180.07999 4.8960114,178.79999 4.1600037,178.20799 3.2640076,178.20799 z M300.78401,173.63198 C299.82401,173.63199 299.18401,174.27199 299.18401,175.37599 L299.18401,180.20799 C299.18401,181.31199 299.82401,181.95199 300.78401,181.95199 301.744,181.95199 302.384,181.31199 302.384,180.20799 L302.384,175.37599 C302.384,174.27199 301.744,173.63199 300.78401,173.63198 z M293.104,173.63198 C292.14401,173.63199 291.50401,174.27199 291.50401,175.37599 L291.50401,180.20799 C291.50401,181.31199 292.14401,181.95199 293.104,181.95199 294.06401,181.95199 294.70401,181.31199 294.70401,180.20799 L294.70401,175.37599 C294.70401,174.27199 294.06401,173.63199 293.104,173.63198 z M10.944008,173.63198 C9.9840088,173.63199 9.3440094,174.27199 9.3440094,175.37599 L9.3440094,180.20799 C9.3440094,181.31199 9.9840088,181.95199 10.944008,181.95199 11.904007,181.95199 12.544006,181.31199 12.544006,180.20799 L12.544006,175.37599 C12.544006,174.27199 11.904007,173.63199 10.944008,173.63198 z M3.4880066,172.09599 L5.3120117,172.09599 2.9120026,176.91199 2.9440002,176.91199 C3.1840057,176.81599 3.5360107,176.76799 3.8079987,176.76799 5.2480011,176.76799 6.5279999,177.72799 6.5279999,179.93599 6.5279999,182.54399 4.8639984,183.58399 3.1679993,183.58399 1.5839996,183.58399 0,182.25599 0,180.11199 0,179.43999 0.14401245,178.78399 0.43200684,178.20799 z M300.78401,171.99999 C302.464,171.99999 304.01601,173.18399 304.01601,175.27999 L304.01601,180.30399 C304.01601,182.39999 302.464,183.58399 300.78401,183.58399 299.104,183.58399 297.552,182.39999 297.552,180.30399 L297.552,175.27999 C297.552,173.18399 299.104,171.99999 300.78401,171.99999 z M293.104,171.99999 C294.78401,171.99999 296.33601,173.18399 296.33601,175.27999 L296.33601,180.30399 C296.33601,182.39999 294.78401,183.58399 293.104,183.58399 291.42401,183.58399 289.87201,182.39999 289.87201,180.30399 L289.87201,175.27999 C289.87201,173.18399 291.42401,171.99999 293.104,171.99999 z M284.992,171.99999 C287.024,171.99999 288.35201,173.58399 288.35201,175.24799 288.35201,176.11199 288.08,176.99199 287.136,177.59999 288.09601,178.20799 288.48001,179.16799 288.48001,180.09599 288.48001,182.20799 286.96001,183.58399 285.024,183.58399 283.48801,183.58399 282.09601,182.55999 281.79201,180.65599 L283.42401,180.65599 C283.72801,181.43999 284.19202,181.95199 285.12001,181.95199 286.03201,181.95199 286.84801,181.26399 286.84801,180.14399 286.84801,179.00799 286.048,178.33599 285.08801,178.33599 L284.40001,178.33599 284.40001,176.89599 284.96001,176.89599 C286.048,176.89599 286.72002,176.20799 286.72002,175.27999 286.72002,174.35199 285.968,173.63199 285.05602,173.63198 284.36801,173.63199 283.66402,174.07999 283.48801,175.00799 L281.856,175.00799 C281.98401,173.39199 283.37601,171.99999 284.992,171.99999 z M10.944008,171.99999 C12.624008,171.99999 14.17601,173.18399 14.17601,175.27999 L14.17601,180.30399 C14.17601,182.39999 12.624008,183.58399 10.944008,183.58399 9.2640076,183.58399 7.7120056,182.39999 7.7120056,180.30399 L7.7120056,175.27999 C7.7120056,173.18399 9.2640076,171.99999 10.944008,171.99999 z M42.784004,55.632004 C41.824005,55.632004 41.184006,56.272003 41.184006,57.376007 L41.184006,62.208008 C41.184006,63.311996 41.824005,63.951996 42.784004,63.951996 43.744003,63.951996 44.38401,63.311996 44.38401,62.208008 L44.38401,57.376007 C44.38401,56.272003 43.744003,55.632004 42.784004,55.632004 z M26.688011,54.095993 L28.32,54.095993 28.32,65.488007 26.688011,65.488007 26.688011,55.824005 25.072014,57.007996 25.072014,55.279999 z M42.784004,54 C44.464005,54 46.016006,55.184006 46.016006,57.279999 L46.016006,62.304001 C46.016006,64.399994 44.464005,65.584 42.784004,65.584 41.104004,65.584 39.55201,64.399994 39.55201,62.304001 L39.55201,57.279999 C39.55201,55.184006 41.104004,54 42.784004,54 z M34.944008,54 C36.848007,54 38.272003,55.455994 38.272003,57.264008 38.272003,58.016006 38.064003,58.671997 37.584007,59.264008 L33.920006,63.856003 38.272003,63.856003 38.272003,65.488007 31.776009,65.488007 31.776009,63.951996 36.224007,58.384003 C36.576004,57.936005 36.640007,57.584 36.640007,57.248001 36.640007,56.447998 36.048004,55.632004 35.072006,55.632004 34.192009,55.632004 33.488007,56.255997 33.408005,57.279999 L31.776009,57.279999 C31.792007,55.423996 33.23201,54 34.944008,54 z M268.78401,52.632004 C267.82401,52.632004 267.18401,53.272003 267.18401,54.376007 L267.18401,59.208008 C267.18401,60.311996 267.82401,60.951996 268.78401,60.951996 269.744,60.951996 270.384,60.311996 270.384,59.208008 L270.384,54.376007 C270.384,53.272003 269.744,52.632004 268.78401,52.632004 z M261.26401,51.095993 L263.08801,51.095993 259.23201,59.255997 262.20801,59.255997 262.20801,55.975998 263.84001,55.975998 263.84001,59.255997 264.75201,59.255997 264.75201,60.792007 263.84001,60.792007 263.84001,62.488007 262.20801,62.488007 262.20801,60.792007 257.45601,60.792007 257.45601,59.255997 z M268.78401,51 C270.464,51 272.01601,52.184006 272.01601,54.279999 L272.01601,59.304001 C272.01601,61.399994 270.464,62.584 268.78401,62.584 267.104,62.584 265.552,61.399994 265.552,59.304001 L265.552,54.279999 C265.552,52.184006 267.104,51 268.78401,51 z M253.26401,51 C255.16801,51 256.59201,52.455994 256.59201,54.264008 256.59201,55.016006 256.384,55.671997 255.90401,56.264008 L252.24001,60.856003 256.59201,60.856003 256.59201,62.488007 250.09601,62.488007 250.09601,60.951996 254.54401,55.384003 C254.89601,54.936005 254.96001,54.584 254.96001,54.248001 254.96001,53.447998 254.36801,52.632004 253.39201,52.632004 252.51201,52.632004 251.80801,53.255997 251.72801,54.279999 L250.09601,54.279999 C250.11201,52.423996 251.552,51 253.26401,51 z M149.10401,6.3359985 C148.12801,6.3359985 147.26401,7.1040039 147.26401,8.1440125 147.26401,9.1839905 148.12801,9.9519958 149.10401,9.9519958 150.08001,9.9519958 150.94401,9.1839905 150.94401,8.1440125 150.94401,7.1040039 150.08001,6.3359985 149.10401,6.3359985 z M156.78401,1.6319885 C155.82401,1.6319885 155.18401,2.2720032 155.18401,3.3760071 L155.18401,8.2080078 C155.18401,9.3120117 155.82401,9.9519958 156.78401,9.9519958 157.74401,9.9519958 158.38401,9.3120117 158.38401,8.2080078 L158.38401,3.3760071 C158.38401,2.2720032 157.74401,1.6319885 156.78401,1.6319885 z M149.10401,1.6319885 C148.27201,1.6319885 147.47201,2.1919861 147.47201,3.2640076 147.47201,4.3359985 148.27201,4.8959961 149.10401,4.8959961 149.93601,4.8959961 150.73601,4.3359985 150.73601,3.2640076 150.73601,2.1919861 149.93601,1.6319885 149.10401,1.6319885 z M140.68801,0.096008301 L142.32001,0.096008301 142.32001,11.488007 140.68801,11.488007 140.68801,1.8240051 139.07201,3.0079956 139.07201,1.2799988 z M156.78401,0 C158.46401,0 160.01601,1.1839905 160.016,3.2799988 L160.016,8.3039856 C160.01601,10.399994 158.46401,11.584015 156.78401,11.584015 155.10401,11.584015 153.55201,10.399994 153.55201,8.3039856 L153.55201,3.2799988 C153.55201,1.1839905 155.10401,0 156.78401,0 z M149.10401,0 C150.94401,0 152.36801,1.4559937 152.36801,3.29599 152.36801,4.2879944 151.90401,4.9920044 151.23201,5.6000061 152.09601,6.1759949 152.57601,7.0880127 152.57601,8.1600037 152.57601,10.175995 150.99201,11.584015 149.10401,11.584015 147.21601,11.584015 145.63201,10.175995 145.63201,8.1600037 145.63201,7.0880127 146.11201,6.1759949 146.97601,5.6000061 146.30401,4.9920044 145.84001,4.2879944 145.84001,3.29599 145.84001,1.4559937 147.26401,0&#xA;149.10401,0 z" Height="281.584" Margin="7.896,8.615,0,0" RenderTransformOrigin="0.490551487044057,0.742314941705231" Stretch="Fill" Width="304.016">
+			<Path.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</Path.RenderTransform>
+		</Path>
+		<Grid x:Name="Gears" Margin="56.5,123,56.5,106">
+			<TextBlock x:Name="Gear" HorizontalAlignment="Center" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" FontSize="45.333" Margin="88.5,0" TextAlignment="Center" Height="58" Padding="0" Width="25" FontFamily="DIN 1451 Std Mittelschrift" Foreground="White">
+				<TextBlock.Effect>
+					<DropShadowEffect BlurRadius="6" ShadowDepth="2"/>
+				</TextBlock.Effect>
+			</TextBlock>
+			<TextBlock x:Name="Gear_1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" FontSize="32" Margin="120.5,9,56.5,0" TextAlignment="Center" Height="58" Padding="0" Width="25" FontFamily="DIN 1451 Std Mittelschrift" Foreground="#FFB8B8B8">
+				<TextBlock.Effect>
+					<DropShadowEffect BlurRadius="6" ShadowDepth="2"/>
+				</TextBlock.Effect>
+			</TextBlock>
+			<TextBlock x:Name="Gear_3" HorizontalAlignment="Center" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" FontSize="32" Margin="56.5,9,120.5,0" TextAlignment="Center" Height="58" Padding="0" Width="25" FontFamily="DIN 1451 Std Mittelschrift" Foreground="#FFB8B8B8">
+				<TextBlock.Effect>
+					<DropShadowEffect BlurRadius="6" ShadowDepth="2"/>
+				</TextBlock.Effect>
+			</TextBlock>
+			<TextBlock x:Name="Gear_2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" FontSize="24" Margin="26,14,151,0" TextAlignment="Center" Height="58" Padding="0" Width="25" FontFamily="DIN 1451 Std Mittelschrift" Foreground="#7F8F8F8F" RenderTransformOrigin="0.5,0.5">
+				<TextBlock.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</TextBlock.RenderTransform>
+				<TextBlock.Effect>
+					<DropShadowEffect BlurRadius="6" ShadowDepth="2"/>
+				</TextBlock.Effect>
+			</TextBlock>
+			<TextBlock x:Name="Gear_4" HorizontalAlignment="Center" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" FontSize="24" Margin="151,14,26,0" TextAlignment="Center" Height="58" Padding="0" Width="25" FontFamily="DIN 1451 Std Mittelschrift" Foreground="#7F8F8F8F">
+				<TextBlock.Effect>
+					<DropShadowEffect BlurRadius="6" ShadowDepth="2"/>
+				</TextBlock.Effect>
+			</TextBlock>
+			<TextBlock x:Name="Gear_4_Dummy" HorizontalAlignment="Center" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" FontSize="24" Margin="177,14,0,0" TextAlignment="Center" Height="58" Padding="0" Width="25" FontFamily="DIN 1451 Std Mittelschrift" Foreground="#008F8F8F">
+				<TextBlock.Effect>
+					<DropShadowEffect BlurRadius="6" ShadowDepth="2"/>
+				</TextBlock.Effect>
+			</TextBlock>
+			<TextBlock x:Name="Gear_2_Dummy" HorizontalAlignment="Center" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" FontSize="24" Margin="0,14,177,0" TextAlignment="Center" Height="58" Padding="0" Width="25" FontFamily="DIN 1451 Std Mittelschrift" Foreground="#008F8F8F">
+				<TextBlock.Effect>
+					<DropShadowEffect BlurRadius="6" ShadowDepth="2"/>
+				</TextBlock.Effect>
+			</TextBlock>
+		</Grid>
+		<Grid x:Name="Pcts" Margin="26,28,25,9">
+			<Grid.OpacityMask>
+				<RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="1" RadiusY="1">
+					<GradientStop Color="Black" Offset="0.547"/>
+					<GradientStop Offset="0.672"/>
+				</RadialGradientBrush>
+			</Grid.OpacityMask>
+			<Grid x:Name="SpeedGridOuter">
+				<Grid>
+					<Grid.OpacityMask>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<LinearGradientBrush.RelativeTransform>
+								<TransformGroup>
+									<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+									<SkewTransform CenterY="0.5" CenterX="0.5"/>
+									<RotateTransform Angle="44" CenterY="0.5" CenterX="0.5"/>
+									<TranslateTransform/>
+								</TransformGroup>
+							</LinearGradientBrush.RelativeTransform>
+							<GradientStop Color="Black" Offset="0.612"/>
+							<GradientStop Offset="0.616"/>
+						</LinearGradientBrush>
+					</Grid.OpacityMask>
+					<Grid x:Name="SpeedGrid" HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="264" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+						<Grid.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform/>
+								<SkewTransform/>
+								<RotateTransform Angle="66"/>
+								<TranslateTransform/>
+							</TransformGroup>
+						</Grid.RenderTransform>
+						<Grid.OpacityMask>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<LinearGradientBrush.RelativeTransform>
+									<TransformGroup>
+										<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+										<SkewTransform CenterY="0.5" CenterX="0.5"/>
+										<RotateTransform x:Name="SpeedGridRotation" CenterY="0.5" CenterX="0.5" Angle="28"/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</LinearGradientBrush.RelativeTransform>
+								<GradientStop Color="Black" Offset="0.522"/>
+								<GradientStop Offset="0.517"/>
+							</LinearGradientBrush>
+						</Grid.OpacityMask>
+						<Grid x:Name="grid">
+							<Grid.OpacityMask>
+								<RadialGradientBrush Center="126,448" GradientOrigin="132,132" MappingMode="Absolute" RadiusY="210" RadiusX="132">
+									<GradientStop Color="Black" Offset="0.944"/>
+									<GradientStop Offset="0.625"/>
+								</RadialGradientBrush>
+							</Grid.OpacityMask>
+							<Ellipse x:Name="SpeedPct_Copy" HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="264" RenderTransformOrigin="0.5,0.5">
+								<Ellipse.Fill>
+									<ImageBrush ImageSource="/TMTVO;component/Data/Images/ringaussen.png">
+										<ImageBrush.RelativeTransform>
+											<TransformGroup>
+												<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+												<SkewTransform CenterY="0.5" CenterX="0.5"/>
+												<RotateTransform Angle="1.5" CenterY="0.5" CenterX="0.5"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</ImageBrush.RelativeTransform>
+									</ImageBrush>
+								</Ellipse.Fill>
+								<Ellipse.OpacityMask>
+									<RadialGradientBrush RelativeTransform="{Binding Data, ElementName=SpeedPath}">
+										<GradientStop Color="Black" Offset="0.81"/>
+										<GradientStop Offset="0.806"/>
+									</RadialGradientBrush>
+								</Ellipse.OpacityMask>
+								<Ellipse.RenderTransform>
+									<TransformGroup>
+										<ScaleTransform/>
+										<SkewTransform/>
+										<RotateTransform x:Name="SpeedRotation1" Angle="-117"/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</Ellipse.RenderTransform>
+							</Ellipse>
+						</Grid>
+					</Grid>
+				</Grid>
+				<Grid x:Name="SpeedGrid12">
+					<Grid.OpacityMask>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<LinearGradientBrush.RelativeTransform>
+								<TransformGroup>
+									<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+									<SkewTransform CenterY="0.5" CenterX="0.5"/>
+									<RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+									<TranslateTransform/>
+								</TransformGroup>
+							</LinearGradientBrush.RelativeTransform>
+							<GradientStop Color="Black" Offset="0.565"/>
+							<GradientStop Offset="0.578"/>
+						</LinearGradientBrush>
+					</Grid.OpacityMask>
+					<Grid x:Name="SpeedGrid1" HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="264" RenderTransformOrigin="0.5,0.5">
+						<Grid.OpacityMask>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<LinearGradientBrush.RelativeTransform>
+									<TransformGroup>
+										<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+										<SkewTransform CenterY="0.5" CenterX="0.5"/>
+										<RotateTransform x:Name="SpeedGrid1Rotation" CenterY="0.5" CenterX="0.5" Angle="-57"/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</LinearGradientBrush.RelativeTransform>
+								<GradientStop Color="Black" Offset="0.522"/>
+								<GradientStop Offset="0.519"/>
+							</LinearGradientBrush>
+						</Grid.OpacityMask>
+						<Grid x:Name="grid1">
+							<Grid.OpacityMask>
+								<RadialGradientBrush Center="126,448" GradientOrigin="132,132" MappingMode="Absolute" RadiusY="210" RadiusX="132">
+									<GradientStop Color="Black" Offset="0.944"/>
+									<GradientStop Offset="0.625"/>
+								</RadialGradientBrush>
+							</Grid.OpacityMask>
+							<Ellipse x:Name="SpeedPct_Copy1" HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="264" RenderTransformOrigin="0.5,0.5">
+								<Ellipse.Fill>
+									<ImageBrush ImageSource="/TMTVO;component/Data/Images/ringaussen.png"/>
+								</Ellipse.Fill>
+								<Ellipse.OpacityMask>
+									<RadialGradientBrush>
+										<GradientStop Color="Black" Offset="0.81"/>
+										<GradientStop Offset="0.806"/>
+									</RadialGradientBrush>
+								</Ellipse.OpacityMask>
+								<Ellipse.RenderTransform>
+									<TransformGroup>
+										<ScaleTransform/>
+										<SkewTransform/>
+										<RotateTransform x:Name="SpeedRotation3" Angle="-117"/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</Ellipse.RenderTransform>
+							</Ellipse>
+						</Grid>
+					</Grid>
+				</Grid>
+			</Grid>
+			<Grid x:Name="RevGridOuter">
+				<Grid Width="201" Height="201">
+					<Grid.OpacityMask>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<LinearGradientBrush.RelativeTransform>
+								<TransformGroup>
+									<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+									<SkewTransform CenterY="0.5" CenterX="0.5"/>
+									<RotateTransform Angle="44" CenterY="0.5" CenterX="0.5"/>
+									<TranslateTransform/>
+								</TransformGroup>
+							</LinearGradientBrush.RelativeTransform>
+							<GradientStop Color="Black" Offset="0.612"/>
+							<GradientStop Offset="0.616"/>
+						</LinearGradientBrush>
+					</Grid.OpacityMask>
+					<Grid x:Name="RevGrid" HorizontalAlignment="Left" Height="201" VerticalAlignment="Top" Width="201" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+						<Grid.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform/>
+								<SkewTransform/>
+								<RotateTransform Angle="66"/>
+								<TranslateTransform/>
+							</TransformGroup>
+						</Grid.RenderTransform>
+						<Grid.OpacityMask>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<LinearGradientBrush.RelativeTransform>
+									<TransformGroup>
+										<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+										<SkewTransform CenterY="0.5" CenterX="0.5"/>
+										<RotateTransform x:Name="RevGridRotation" CenterY="0.5" CenterX="0.5" Angle="27"/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</LinearGradientBrush.RelativeTransform>
+								<GradientStop Color="Black" Offset="0.522"/>
+								<GradientStop Offset="0.517"/>
+							</LinearGradientBrush>
+						</Grid.OpacityMask>
+						<Grid x:Name="grid2" Width="201" Height="201">
+							<Grid.OpacityMask>
+								<RadialGradientBrush Center="126,448" GradientOrigin="132,132" MappingMode="Absolute" RadiusY="210" RadiusX="132">
+									<GradientStop Color="Black" Offset="0.944"/>
+									<GradientStop Offset="0.625"/>
+								</RadialGradientBrush>
+							</Grid.OpacityMask>
+							<Ellipse x:Name="RevPct" HorizontalAlignment="Left" Height="201" VerticalAlignment="Top" Width="201" RenderTransformOrigin="0.5,0.5">
+								<Ellipse.Fill>
+									<ImageBrush ImageSource="/TMTVO;component/Data/Images/ringinnen.png">
+										<ImageBrush.RelativeTransform>
+											<TransformGroup>
+												<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+												<SkewTransform CenterY="0.5" CenterX="0.5"/>
+												<RotateTransform Angle="1" CenterY="0.5" CenterX="0.5"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</ImageBrush.RelativeTransform>
+									</ImageBrush>
+								</Ellipse.Fill>
+								<Ellipse.OpacityMask>
+									<RadialGradientBrush RelativeTransform="{Binding Data, ElementName=SpeedPath}">
+										<GradientStop Color="Black" Offset="0.759"/>
+										<GradientStop Offset="0.754"/>
+									</RadialGradientBrush>
+								</Ellipse.OpacityMask>
+								<Ellipse.RenderTransform>
+									<TransformGroup>
+										<ScaleTransform/>
+										<SkewTransform/>
+										<RotateTransform x:Name="SpeedRotation2" Angle="-117"/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</Ellipse.RenderTransform>
+							</Ellipse>
+						</Grid>
+					</Grid>
+				</Grid>
+				<Grid x:Name="RevGrid12" Width="201" Height="201" RenderTransformOrigin="0.5,0.5">
+					<Grid.OpacityMask>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<LinearGradientBrush.RelativeTransform>
+								<TransformGroup>
+									<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+									<SkewTransform CenterY="0.5" CenterX="0.5"/>
+									<RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+									<TranslateTransform/>
+								</TransformGroup>
+							</LinearGradientBrush.RelativeTransform>
+							<GradientStop Color="Black" Offset="0.565"/>
+							<GradientStop Offset="0.578"/>
+						</LinearGradientBrush>
+					</Grid.OpacityMask>
+					<Grid x:Name="RevGrid1" HorizontalAlignment="Left" Height="201" VerticalAlignment="Top" Width="201" RenderTransformOrigin="0.5,0.5">
+						<Grid.OpacityMask>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<LinearGradientBrush.RelativeTransform>
+									<TransformGroup>
+										<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+										<SkewTransform CenterY="0.5" CenterX="0.5"/>
+										<RotateTransform x:Name="RevGrid1Rotation" CenterY="0.5" CenterX="0.5" Angle="-47"/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</LinearGradientBrush.RelativeTransform>
+								<GradientStop Color="Black" Offset="0.522"/>
+								<GradientStop Offset="0.519"/>
+							</LinearGradientBrush>
+						</Grid.OpacityMask>
+						<Grid x:Name="grid3" Width="201" Height="201">
+							<Grid.OpacityMask>
+								<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+									<LinearGradientBrush.RelativeTransform>
+										<TransformGroup>
+											<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+											<SkewTransform CenterY="0.5" CenterX="0.5"/>
+											<RotateTransform Angle="-51" CenterY="0.5" CenterX="0.5"/>
+											<TranslateTransform/>
+										</TransformGroup>
+									</LinearGradientBrush.RelativeTransform>
+									<GradientStop Color="Black" Offset="0.491"/>
+									<GradientStop Offset="0.496"/>
+								</LinearGradientBrush>
+							</Grid.OpacityMask>
+							<Ellipse x:Name="RevPct_Copy" HorizontalAlignment="Left" Height="201" VerticalAlignment="Top" Width="201" RenderTransformOrigin="0.5,0.5">
+								<Ellipse.Fill>
+									<ImageBrush ImageSource="/TMTVO;component/Data/Images/ringinnen.png"/>
+								</Ellipse.Fill>
+								<Ellipse.OpacityMask>
+									<RadialGradientBrush RelativeTransform="{Binding Data, ElementName=SpeedPath}">
+										<GradientStop Color="Black" Offset="0.759"/>
+										<GradientStop Offset="0.754"/>
+									</RadialGradientBrush>
+								</Ellipse.OpacityMask>
+								<Ellipse.RenderTransform>
+									<TransformGroup>
+										<ScaleTransform/>
+										<SkewTransform/>
+										<RotateTransform x:Name="SpeedRotation4" Angle="-117"/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</Ellipse.RenderTransform>
+							</Ellipse>
+						</Grid>
+					</Grid>
+				</Grid>
+			</Grid>
+		</Grid>
+		<TextBlock x:Name="RPM" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" Height="30" FontFamily="DIN 1451 Std Mittelschrift" Margin="112,181,0,0" TextAlignment="Center" FontSize="26.667" Foreground="#FF999999"><Run Text="12119"/></TextBlock>
+		<TextBlock x:Name="SpeedLow" TextWrapping="Wrap" Margin="108,232,0,0" Height="50" Width="100" Foreground="White" FontSize="45.333" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="DIN 1451 Std Mittelschrift"><Run Text="241"/></TextBlock>
+        <TextBlock x:Name="Speed" TextWrapping="Wrap" Margin="108,232,0,0" Height="50" Width="100" Foreground="#FF69F0E4" FontSize="45.333" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="DIN 1451 Std Mittelschrift" Opacity="0"><Run Text="241"/></TextBlock>
+        <Path x:Name="RevPath" Data="M108.75,217.75 C99.090125,230.21318 97.908873,231.17092 92.742207,237.50425 75.982269,222.4193 42.970041,184.7068 62.269254,127.38385 78.775492,78.357899 121.76739,59.953152 157.75,59.25 196.5354,58.492078 241.54898,80.871814 257.54702,134.1721 273.54505,187.47238 232.66178,232.2245 224.2815,237.25283 213.61585,222.67072 223.26543,235.74434 209.29921,217.64236 223.0115,208.08853 243.58035,174.65015 233.67683,140.70893 223.77331,106.76771 192.53626,83.819089&#xD;&#xA;159.27362,83.385978 120.67503,82.883388 91.218377,111.54477 84.616033,138.44633 78.013689,165.34789 81.314858,194.00928 108.75,217.75 z" HorizontalAlignment="Left" Height="178.269" Margin="56.965,59.231,0,0" Stretch="Fill" VerticalAlignment="Top" Width="202.655" Stroke="Gray" StrokeThickness="2"/>
+		<Path x:Name="SpeedPath" Data="M158.49971,27.833326 C251.49875,28.750778 292.49921,112.75019 289.4996,161.99984 288.9992,214.24947 258.49944,254.49913 217.49932,277.49901 214.16598,271.2767 210.58262,260.4715 207.24928,254.24919 235.9159,237.91596 264.49864,203.99943 264.49864,160.99967 264.49867,101.00013 216.16594,53.167159 157.16605,52.500197 92.832529,53.16686 50.331918,108.66677 50.998577,154.9997 49.331915,206.33293 75.415399,231.4993 102.74887,251.49919 95.748843,262.99911 94.108877,266.97131&#xD;&#xA;89.997754,272.74905 41.746557,243.74922 24.998139,197.49947 25.49814,155.49965 29.498571,62.750325 111.4986,25.750799 158.49971,27.833326 z" HorizontalAlignment="Left" Height="250.75" Margin="25.49,27.75,0,0" Stretch="Fill" Stroke="Gray" VerticalAlignment="Top" Width="265.164" StrokeThickness="2"/>
+		<Path x:Name="P2PPath" Data="M220,121.74936 C166.75019,121.99914 161.83347,121.99886 96.083333,121.74904 102.33333,111.87343 119.62517,87.124231 158.12517,86.749504 194.3769,86.39666 214.5,113.24939 220,121.74936 z" Fill="#991B1B1B" HorizontalAlignment="Left" Height="35.191" Margin="96.083,86.747,0,0" Stretch="Fill" StrokeThickness="2" VerticalAlignment="Top" Width="123.917" Stroke="#CA000000"/>
+		<TextBlock x:Name="P2PText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="P2P" VerticalAlignment="Top" FontSize="24" Margin="137.5,91.326,137.5,0" FontFamily="DIN 1451 Std Mittelschrift" Width="40" Height="28">
+			<TextBlock.Foreground>
+				<SolidColorBrush Color="#FF959895"/>
+			</TextBlock.Foreground>
+		</TextBlock>
+    </Grid>
+</UserControl>
